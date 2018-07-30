@@ -6,4 +6,5 @@ Put all files into addons/bomdia and configure in game with the commands
 
 ## Commands
 bomdia_cabuloso_rate - Rate of bom dia cabuloso.
+
 bomdia_interval_time - Interval between bom dias.
