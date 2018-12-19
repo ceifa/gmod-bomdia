@@ -1,11 +1,16 @@
 if SERVER then
+	local possibleCommands = {
+		"bom dia",
+		"good morning",
+		"buenos dias"
+	}
+
 	sql.Query("CREATE TABLE IF NOT EXISTS bomdia ( `sid64` STRING, `bomdias` INT, PRIMARY KEY(sid64) )")
 
 	hook.Add( "PlayerSay", "HelloCommand", function( ply, strText, bTeam )
-
 		local strTextMin = string.lower( strText )
 
-		if strTextMin == "bom dia" then
+		if table.HasValue(possibleCommands, strTextMin) then
 			if not ply.lastBomDia or ply.lastBomDia < CurTime() then
 
 				ply.lastBomDia = CurTime() + GetConVar("bomdia_interval_time"):GetInt()
@@ -15,9 +20,9 @@ if SERVER then
 				local bomdia = math.random()
 				
 				if bomdia > GetConVar("bomdia_cabuloso_rate"):GetFloat() then
-					DarBomDiaCabuloso(ply)
+					GiveBomDiaCabuloso(ply)
 				else
-					DarBomDia(ply)				
+					GiveBomDia(ply)				
 				end
 				
 				return ""
@@ -28,7 +33,7 @@ if SERVER then
 	
 	util.AddNetworkString( "write_chat" )
 
-	function DarBomDia(ply)
+	function GiveBomDia(ply)
 		local color = Color( math.random(0, 255), math.random(0, 255), math.random(0, 255) )
 
 		local parse = {}
@@ -41,7 +46,7 @@ if SERVER then
 		net.Broadcast()
 	end
 
-	function DarBomDiaCabuloso(ply)
+	function GiveBomDiaCabuloso(ply)
 		local color = Color( 255, 215, 0 )
 
 		local parse = {}
