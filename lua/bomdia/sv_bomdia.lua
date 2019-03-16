@@ -47,11 +47,12 @@ if SERVER then
 	end
 
 	function GiveBomDiaCabuloso(ply)
+		local points = GetConVar("bomdia_cabuloso_points"):GetInt()
 		local color = Color( 255, 215, 0 )
 
 		local parse = {}
 		table.insert( parse, color )
-		table.insert( parse, ply:GetName().." deu um bom dia cabuloso! Todos os jogadores ganharam 200 pontos!" )
+		table.insert( parse, ply:GetName().." deu um bom dia cabuloso! Todos os jogadores ganharam "..points.." pontos!" )
 
 		net.Start("write_chat")
 			net.WriteString(util.TableToJSON(parse))
@@ -59,7 +60,7 @@ if SERVER then
 		net.Broadcast()
 		
 		for k, v in pairs( player.GetAll() ) do
-			v:PS_GivePoints(200)
+			v:PS_GivePoints(points)
 		end
 	end
 end
