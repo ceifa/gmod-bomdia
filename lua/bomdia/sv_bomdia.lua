@@ -20,9 +20,9 @@ if SERVER then
 				local bomdia = math.random()
 				
 				if bomdia > GetConVar("bomdia_cabuloso_rate"):GetFloat() then
-					GiveBomDiaCabuloso(ply)
+					GiveBomDiaCabuloso(ply, strTextMin)
 				else
-					GiveBomDia(ply)				
+					GiveBomDia(ply, strTextMin)				
 				end
 				
 				return ""
@@ -33,12 +33,12 @@ if SERVER then
 	
 	util.AddNetworkString( "write_chat" )
 
-	function GiveBomDia(ply)
+	function GiveBomDia(ply, command)
 		local color = Color( math.random(0, 255), math.random(0, 255), math.random(0, 255) )
 
 		local parse = {}
 		table.insert( parse, color )
-		table.insert( parse, ply:GetName().." deu bom dia para todos do servidor!" )
+		table.insert( parse, ply:GetName().." deu "..command.." para todos do servidor!" )
 
 		net.Start("write_chat")
 			net.WriteString(util.TableToJSON(parse))
@@ -46,13 +46,13 @@ if SERVER then
 		net.Broadcast()
 	end
 
-	function GiveBomDiaCabuloso(ply)
+	function GiveBomDiaCabuloso(ply, command)
 		local points = GetConVar("bomdia_cabuloso_points"):GetInt()
 		local color = Color( 255, 215, 0 )
 
 		local parse = {}
 		table.insert( parse, color )
-		table.insert( parse, ply:GetName().." deu um bom dia cabuloso! Todos os jogadores ganharam "..points.." pontos!" )
+		table.insert( parse, ply:GetName().." deu um "..command.." cabuloso! Todos os jogadores ganharam "..points.." pontos!" )
 
 		net.Start("write_chat")
 			net.WriteString(util.TableToJSON(parse))
