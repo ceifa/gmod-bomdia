@@ -19,7 +19,7 @@ if SERVER then
 				
 				local bomdia = math.random()
 				
-				if bomdia > GetConVar("bomdia_cabuloso_rate"):GetFloat() then
+				if PS and PS.PS_GivePoints and bomdia > GetConVar("bomdia_cabuloso_rate"):GetFloat() then
 					GiveBomDiaCabuloso(ply, strTextMin)
 				else
 					GiveBomDia(ply, strTextMin)				
@@ -47,12 +47,13 @@ if SERVER then
 	end
 
 	function GiveBomDiaCabuloso(ply, command)
-		local points = GetConVar("bomdia_cabuloso_points"):GetInt()
-		local color = Color( 255, 215, 0 )
+        local points = GetConVar("bomdia_cabuloso_points"):GetInt()
+        local pointsName = PS.Config and PS.Config.PointsName or "pontos"
+        local color = Color( 255, 215, 0 )
 
 		local parse = {}
 		table.insert( parse, color )
-		table.insert( parse, ply:GetName().." deu um "..command.." cabuloso! Todos os jogadores ganharam "..points.." pontos!" )
+		table.insert( parse, ply:GetName().." deu um "..command.." cabuloso! Todos os jogadores ganharam "..points.." "..pointsName.."!" )
 
 		net.Start("write_chat")
 			net.WriteString(util.TableToJSON(parse))
