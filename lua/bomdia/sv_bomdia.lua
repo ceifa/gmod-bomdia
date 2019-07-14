@@ -19,7 +19,7 @@ if SERVER then
 				
 				local bomdia = math.random()
 				
-				if PS and PS.PS_GivePoints and bomdia > GetConVar("bomdia_cabuloso_rate"):GetFloat() then
+				if PS and bomdia > GetConVar("bomdia_cabuloso_rate"):GetFloat() then
 					GiveBomDiaCabuloso(ply, strTextMin)
 				else
 					GiveBomDia(ply, strTextMin)				
