@@ -1,4 +1,3 @@
-AddCSLuaFile()
 AddCSLuaFile("bomdia/cl_bomdia.lua")
 
 if CLIENT then
