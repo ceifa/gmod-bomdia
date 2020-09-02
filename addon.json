@@ -1,0 +1,10 @@
+{
+    "title": "Bom dia",
+    "type": "tool",
+    "tags": ["fun"],
+    "ignore": [
+        "README.md",
+        ".git/*",
+        "image.jpeg"
+    ]
+}

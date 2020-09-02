@@ -1,4 +1,4 @@
-local possibleCommands = {"bom dia", "good morning", "buenos dias"}
+local possibleCommands = {"bom dia", "good morning", "buenos dias", "bonjour"}
 sql.Query("CREATE TABLE IF NOT EXISTS bomdia ( `sid64` STRING, `bomdias` INT, PRIMARY KEY(sid64) )")
 
 hook.Add("PlayerSay", "HelloCommand", function(ply, text)
@@ -6,7 +6,12 @@ hook.Add("PlayerSay", "HelloCommand", function(ply, text)
 
     if table.HasValue(possibleCommands, text) and (not ply.lastBomDia or ply.lastBomDia < CurTime()) then
         ply.lastBomDia = CurTime() + GetConVar("bomdia_interval_time"):GetInt()
-        sql.Query("INSERT OR IGNORE INTO `bomdia` (sid64, bomdias) VALUES ('" .. ply:SteamID64() .. "', 0); UPDATE `bomdia` SET bomdias = bomdias + 1 WHERE sid64 = '" .. ply:SteamID64() .. "'")
+
+        local steamId64 = ply:SteamID64()
+        if steamId64 then
+            sql.Query("INSERT OR IGNORE INTO `bomdia` (sid64, bomdias) VALUES ('" .. steamId64 .. "', 0); UPDATE `bomdia` SET bomdias = bomdias + 1 WHERE sid64 = '" .. steamId64 .. "'")
+        end
+
         local bomdia = math.random()
 
         if PS and bomdia > GetConVar("bomdia_cabuloso_rate"):GetFloat() then
